@@ -1,0 +1,60 @@
+clear all;
+clc;
+miu=0.1;
+rho=0.56
+beta=0.7;
+sigma=0.6;
+alpa=0.05;
+delta=0.3;
+S(1)=5000;
+E(1)=100;
+A(1)=100;
+R(1)=100;
+N(1)=S(1)+E(1)+A(1)+R(1);
+h=0.001;
+t=0:h:100;
+n=length(t);
+for i=1:n-1
+    y=[S(i) E(i) A(i) R(i)];
+k1=h*sistem(y,alpa,miu,N(i),rho,delta,sigma,beta);
+k2=h*sistem(y+0.5*k1,alpa,miu,N(i),rho,delta,sigma,beta);
+k3=h*sistem(y+0.5*k2,alpa,miu,N(i),rho,delta,sigma,beta);
+k4=h*sistem(y+k3,alpa,miu,N(i),rho,delta,sigma,beta);
+y=y+(1/6)*(k1+2*k2+2*k3+k4);
+S(i+1)=y(1); E(i+1)=y(2); A(i+1)=y(3);R(i+1)=y(4);
+N(i+1)=S(i+1)+E(i+1)+A(i+1)+R(i+1);
+end
+    figure(1)
+    subplot(2,2,1);
+    plot(t,S,'b');
+    title('Grafik subpopulasi S(t)');
+    grid on;
+    hold on;
+    xlabel('t');
+    subplot(2,2,2);
+    plot(t,E,'r');
+    title('Grafik subpopulasi E(t)');
+    grid on;
+    hold on;
+    xlabel('t');
+
+    subplot(2,2,3);
+    plot(t,A,'g');
+    title('Grafik subpopulasi A(t)');
+    grid on;
+    hold on;
+    xlabel('t');
+
+
+    subplot(2,2,4);
+    plot(t,R,'m');
+    title('Grafik R(t)');
+    grid on;
+    hold on;
+    xlabel('S(t)');
+  
+    figure(2)
+    plot(t,N,'y','linewidth',4); grid on; hold on;
+    title('Total populasi');
+    xlabel('t');
+    ylabel('N(t)');

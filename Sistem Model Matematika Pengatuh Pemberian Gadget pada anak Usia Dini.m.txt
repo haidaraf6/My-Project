@@ -1,0 +1,6 @@
+function dt = sistem(y,alpa,miu,N,rho,delta,sigma,beta)
+x(1)=alpa*N-miu.*y(1)-(beta.*y(3).*y(1))/N+rho.*y(4);
+x(2)=(beta.*y(3).*y(1))/N-(miu+sigma+delta).*y(2);
+x(3)=sigma.*y(2)-(miu+delta).*y(3);
+x(4)=delta.*y(2)+delta.*y(3)-(miu+rho).*y(4);
+dt=[x(1) x(2) x(3) x(4)];
